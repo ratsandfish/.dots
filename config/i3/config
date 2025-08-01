@@ -1,0 +1,162 @@
+set $mod Mod4
+
+font pango:DejaVu Sans Mono Nerd Font 16px
+
+#Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+i exec kitty
+
+# start firefox
+bindsym $mod+p exec firefox
+
+# start emacs
+exec --no-startup-id emacs --daemon
+bindsym $mod+e exec --no-startup-id sh -c 'emacsclient -c -a ""'
+
+# kill focused window
+bindsym $mod+q kill
+
+# rofi
+bindsym $mod+o exec dmenu_run
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+Shift+b split h
+
+# split in vertical orientation
+bindsym $mod+Shift+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+w layout tabbed
+bindsym $mod+s layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Border settings
+default_border pixel 4
+default_floating_border pixel 4
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #70946B #70946B #ffffff #70946B #70946B
+client.focused_inactive #70946B #70946B #ffffff #70946B #70946B
+client.unfocused        #70946B #70946B #888888 #70946B #70946B
+client.urgent           #70946B #70946B #ffffff #70946B #70946B
+client.placeholder      #70946B #70946B #ffffff #70946B #70946B
+
+client.background       #ffffff
+
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "emacs :)"
+set $ws2 "terminal :) "
+set $ws3 "spotify :) "
+set $ws4 "Vlc :) "
+set $ws5 "Misc :( "
+set $ws6 "Misc :("
+set $ws7 "torrenting :) "
+set $ws8 "virtual machines :)"
+set $ws9 "browser :)"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym Mod1+Tab workspace back_and_forth
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'you hit the -kill i3- shortcut. are you stupid?' -B 'No, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Escape mode "default"
+}
+
+# resize windows
+bindsym $mod+r mode "resize"
+
+# autostart
+exec --no-startup-id feh --bg-fill -randomize ~/.dots/vanity/walls*
+
+# launch picom
+exec_always picom
+
+
+# gaps
+gaps inner 6
+gaps outer 3
+gaps top 3
+
+#le bar
+bar {
+
+        i3bar_command i3bar -t
+        status_command i3status --config ~/.config/i3/i3status.conf
+        tray_output primary
+        mode dock
+        hidden_state hide
+        modifier Mod4
+        position bottom
+        separator_symbol " | "
+        workspace_buttons yes
+         colors {
+             focused_workspace #000000  #000000 $accent1
+             inactive_workspace #000000aa #000000aa #777777
+             active_workspace   #333333 #5f676a #ffffff
+             urgent_workspace   #2f343a #ff0000 #ffffff
+             binding_mode       #2f343a #ff0000 #ffffff           
+             statusline $accent1
+             background #000000
+         }
+}

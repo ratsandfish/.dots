@@ -1,4 +1,4 @@
-emacs --daemon &
+emacs --fg-daemon &
 
 xmodmap ~/.Xmodmap &
 
@@ -8,5 +8,6 @@ feh --bg-fill --randomize ~/dotfiles/vanity/walls/*
 
 dunst &
 
-exec startxfce4
+#exec startxfce4
 #exec dwm
+exec i3
